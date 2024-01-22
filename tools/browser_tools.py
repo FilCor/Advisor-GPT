@@ -6,12 +6,14 @@ from crewai import Agent, Task
 from langchain.tools import tool
 from unstructured.partition.html import partition_html
 from aws_utilis import get_aws_parameter
+from langchain.chat_models import ChatOpenAI
 
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 browserless_api_key = get_aws_parameter("BROWSERLESS_API_KEY", decrypt=True)
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
+llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key)
 
 
 
@@ -35,6 +37,7 @@ class BrowserTools():
           'Do amazing research and summaries based on the content you are working with',
           backstory=
           "You're a Principal Researcher at a big company and you need to do research about a given topic.",
+          llm = llm,
           allow_delegation=False)
       task = Task(
           agent=agent,
