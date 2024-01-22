@@ -3,7 +3,7 @@ import os
 
 import requests
 from langchain.tools import tool
-from aws_utils import get_aws_parameter
+from aws_utilis import get_aws_parameter
 
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 serper_api_key = get_aws_parameter("SERPER_API_KEY", decrypt=True)

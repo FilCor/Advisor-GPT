@@ -10,6 +10,18 @@ from langchain_community.vectorstores import FAISS
 from sec_api import QueryApi
 from unstructured.partition.html import partition_html
 
+from aws_utilis import get_aws_parameter
+
+# Recupera le chiavi API da AWS Systems Manager Parameter Store
+sec_api_api_key = get_aws_parameter("SEC_API_API_KEY", decrypt=True)
+openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
+
+# Ora puoi utilizzare queste variabili dove necessario nel tuo codice
+
+
+# Ora puoi utilizzare queste variabili dove necessario nel tuo codice
+
+
 class SECTools():
   @tool("Search 10-Q form")
   def search_10q(data):
@@ -22,7 +34,7 @@ class SECTools():
 		For example, `AAPL|what was last quarter's revenue`.
     """
     stock, ask = data.split("|")
-    queryApi = QueryApi(api_key=os.environ['SEC_API_API_KEY'])
+    queryApi = QueryApi(api_key=sec_api_api_key)
     query = {
       "query": {
         "query_string": {
@@ -52,7 +64,7 @@ class SECTools():
     For example, `AAPL|what was last year's revenue`.
     """
     stock, ask = data.split("|")
-    queryApi = QueryApi(api_key=os.environ['SEC_API_API_KEY'])
+    queryApi = QueryApi(api_key=sec_api_api_key)
     query = {
       "query": {
         "query_string": {
