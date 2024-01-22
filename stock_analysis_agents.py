@@ -24,7 +24,7 @@ from aws_utilis import get_aws_parameter
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
-llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key)
+llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key, max_tokens=8000, temperature=0.3)
 Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(serp_api_key=serpapi_api_key))
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
 
@@ -32,7 +32,7 @@ Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(s
 class StockAnalysisAgents():
   def financial_analyst(self):
     return Agent(
-      role='The Best Financial Analyst',
+      role='Il miglior Financial Analyst di sempre',
       goal="""Impress all customers with your financial data 
       and market trends analysis""",
       backstory="""The most seasoned financial analyst with 
@@ -40,14 +40,15 @@ class StockAnalysisAgents():
       strategies that is working for a super important customer.""",
       verbose=True,
       llm = llm,
-      allow_delegation = False,
+      allow_delegation = True,
       #llm=ollama_openchat,
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         CalculatorTools.calculate,
         SECTools.search_10q,
-        SECTools.search_10k
+        SECTools.search_10k,
+        YahooFinanceNewsTool
       ]
     )
 
@@ -63,12 +64,12 @@ class StockAnalysisAgents():
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
-      allow_delegation = False,
+      allow_delegation = True,
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        Googlefinance_tool,
+        YahooFinanceNewsTool,
         SECTools.search_10q,
         SECTools.search_10k
       ]
@@ -86,7 +87,7 @@ class StockAnalysisAgents():
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
-      allow_delegation = False,
+      allow_delegation = True,
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,

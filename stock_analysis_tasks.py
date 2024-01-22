@@ -11,7 +11,7 @@ class StockAnalysisTasks():
         sentiments, and analysts' opinions. Also include upcoming 
         events like earnings and others.
   
-        Your final answer MUST be a report that includes a
+        Your final answer MUST be a report that includes among the ther informations a
         comprehensive summary of the latest news, any notable
         shifts in market sentiment, and potential impacts on 
         the stock.
@@ -48,6 +48,7 @@ class StockAnalysisTasks():
         {self.__tip_section()}
 
         Make sure to use the most recent data possible.
+        you MUST NOT cance any previous information in the report, just add your informations
       """),
       agent=agent
     )
@@ -65,7 +66,7 @@ class StockAnalysisTasks():
         Your final answer MUST be an expanded report that now
         also highlights significant findings from these filings,
         including any red flags or positive indicators for
-        your customer.
+        your customer.you MUST NOT cance any previous information in the report, just add your informations
         {self.__tip_section()}        
       """),
       agent=agent
@@ -73,14 +74,14 @@ class StockAnalysisTasks():
 
   def recommend(self, agent):
     return Task(description=dedent(f"""
-        Review and synthesize the analyses provided by the
-        Financial Analyst and the Research Analyst.
+        Review and synthesize, but not much, i want a loing report, the analyses provided by the
+        Financial Analyst, the Research Analyst and the filings analyst.
         Combine these insights to form a comprehensive
         investment recommendation. 
         
         You MUST Consider all aspects, including financial
         health, market sentiment, qualitative data from
-        EDGAR filings and performances.
+        EDGAR filings and stock performances. If you have report them!
 
         Make sure to include a section that shows insider 
         trading activity, and upcoming events like earnings.
