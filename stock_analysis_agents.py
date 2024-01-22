@@ -18,13 +18,14 @@ from langchain_community.utilities.google_finance import GoogleFinanceAPIWrapper
 
 # llm = GoogleGenerativeAI(model="gemini-pro", google_api_key="AIzaSyA2i2P9hlJ7lSkOhMdYfgqtCkC7Vwj-pPE")
 
-Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper())
+
 from aws_utilis import get_aws_parameter
 
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
 llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key)
+Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(serp_api_key=serpapi_api_key))
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
 
 
