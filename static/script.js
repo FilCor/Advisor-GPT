@@ -5,6 +5,8 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     document.getElementById('statusText').innerText = 'Analyzing...';
     document.getElementById('statusText').style.color = 'orange';
 
+    showModal();
+
     fetch('http://13.60.22.140:8000/analyze/', {
         method: 'POST',
         headers: {
@@ -29,9 +31,8 @@ function checkAnalysisStatus(companyName) {
         if (data.status === "Complete") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
-            document.getElementById('showResult').style.display = 'block';
+            showResult(companyName);
         } else {
-            // Check the status again after some delay
             setTimeout(() => checkAnalysisStatus(companyName), 5000);
         }
     })
@@ -40,14 +41,11 @@ function checkAnalysisStatus(companyName) {
     });
 }
 
-
-document.getElementById('showResult').addEventListener('click', function() {
-    var companyName = document.getElementById('company').value;
+function showResult(companyName) {
     fetch(`http://13.60.22.140:8000/result/${companyName}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
-            // Display the result in your desired format
             document.getElementById('result').innerText = data.result;
             document.getElementById('result').style.display = 'block';
         } else {
@@ -57,5 +55,22 @@ document.getElementById('showResult').addEventListener('click', function() {
     .catch((error) => {
         console.error('Error:', error);
     });
-});
+}
 
+// Modal functionality
+var modal = document.getElementById('disclaimerModal');
+var span = document.getElementsByClassName("close")[0];
+
+function showModal() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

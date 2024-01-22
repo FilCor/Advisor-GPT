@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self';">
     <title>Stock Analyzer AI Agent</title>
     <link rel="stylesheet" href="../static/style.css">
 </head>
@@ -20,12 +19,18 @@
             <p>Status: <span id="statusText">Waiting...</span></p>
         </div>
 
-        <button id="showResult" style="display:none;">Show Analysis</button>
-
         <div id="result">
             <!-- Analysis Result Will Be Displayed Here -->
         </div>
     </div>
+
+    <div id="disclaimerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>This tool is for educational purposes only and should not be used as the sole basis for investment decisions.</p>
+        </div>
+    </div>
+
     <script src="../static/script.js"></script>
 </body>
 </html>
