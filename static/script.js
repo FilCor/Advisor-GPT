@@ -5,7 +5,7 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     document.getElementById('statusText').innerText = 'Analyzing...';
     document.getElementById('statusText').style.color = 'orange';
 
-    fetch('http://127.0.0.1:8000/analyze/', {
+    fetch('http://13.60.22.140:8000/analyze/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
 });
 
 function checkAnalysisStatus(companyName) {
-    fetch(`http://127.0.0.1:8000/status/${companyName}`)
+    fetch(`http://13.60.22.140:8000/status/${companyName}`)
     .then(response => response.json())
     .then(data => {
         if (data.status === "Complete") {
@@ -43,7 +43,7 @@ function checkAnalysisStatus(companyName) {
 
 document.getElementById('showResult').addEventListener('click', function() {
     var companyName = document.getElementById('company').value;
-    fetch(`http://127.0.0.1:8000/result/${companyName}`)
+    fetch(`http://13.60.22.140:8000/result/${companyName}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
