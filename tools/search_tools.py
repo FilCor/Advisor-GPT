@@ -3,6 +3,12 @@ import os
 
 import requests
 from langchain.tools import tool
+from aws_utils import get_aws_parameter
+
+# Recupera le chiavi API da AWS Systems Manager Parameter Store
+serper_api_key = get_aws_parameter("SERPER_API_KEY", decrypt=True)
+
+# Ora puoi utilizzare queste variabili dove necessario nel tuo codice
 
 
 class SearchTools():
@@ -14,7 +20,7 @@ class SearchTools():
     url = "https://google.serper.dev/search"
     payload = json.dumps({"q": query})
     headers = {
-        'X-API-KEY': os.environ['SERPER_API_KEY'],
+        'X-API-KEY': serper_api_key,
         'content-type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
@@ -39,7 +45,7 @@ class SearchTools():
     url = "https://google.serper.dev/news"
     payload = json.dumps({"q": query})
     headers = {
-        'X-API-KEY': os.environ['SERPER_API_KEY'],
+        'X-API-KEY': serper_api_key,
         'content-type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)

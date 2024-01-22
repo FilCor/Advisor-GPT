@@ -5,6 +5,13 @@ import requests
 from crewai import Agent, Task
 from langchain.tools import tool
 from unstructured.partition.html import partition_html
+from aws_utils import get_aws_parameter
+
+# Recupera le chiavi API da AWS Systems Manager Parameter Store
+browserless_api_key = get_aws_parameter("BROWSERLESS_API_KEY", decrypt=True)
+
+# Ora puoi utilizzare queste variabili dove necessario nel tuo codice
+
 
 
 class BrowserTools():
@@ -12,7 +19,7 @@ class BrowserTools():
   @tool("Scrape website content")
   def scrape_and_summarize_website(website):
     """Useful to scrape and summarize a website content"""
-    url = f"https://chrome.browserless.io/content?token={os.environ['BROWSERLESS_API_KEY']}"
+    url = f"https://chrome.browserless.io/content?token={browserless_api_key}"
     payload = json.dumps({"url": website})
     headers = {'cache-control': 'no-cache', 'content-type': 'application/json'}
     response = requests.request("POST", url, headers=headers, data=payload)
