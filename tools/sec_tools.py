@@ -96,7 +96,7 @@ class SECTools():
     )
     docs = text_splitter.create_documents([content])
     retriever = FAISS.from_documents(
-      docs, OpenAIEmbeddings()
+      docs, OpenAIEmbeddings(openai_api_key=openai_api_key)
     ).as_retriever()
     answers = retriever.get_relevant_documents(ask, top_k=4)
     answers = "\n\n".join([a.page_content for a in answers])
