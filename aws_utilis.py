@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 
-def get_parameter(param_name, decrypt=False):
+def get_aws_parameter(param_name, decrypt=False):
     """Ottieni un parametro dal AWS Parameter Store."""
     ssm = boto3.client('ssm')
     try:
