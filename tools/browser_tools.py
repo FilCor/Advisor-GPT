@@ -9,6 +9,7 @@ from aws_utilis import get_aws_parameter
 
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 browserless_api_key = get_aws_parameter("BROWSERLESS_API_KEY", decrypt=True)
+openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
 

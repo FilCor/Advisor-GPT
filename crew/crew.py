@@ -3,11 +3,12 @@ from crewai import Crew
 from textwrap import dedent
 from dotenv import load_dotenv
 from pydantic import BaseModel
-load_dotenv()
+from aws_utilis import get_aws_parameter
 
 
 from stock_analysis_agents import StockAnalysisAgents
 from stock_analysis_tasks import StockAnalysisTasks
+openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 
 class FinancialCrew:
