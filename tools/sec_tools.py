@@ -117,7 +117,8 @@ class SECTools():
       'Sec-Fetch-Site': 'none',
       'Sec-Fetch-User': '?1',
       'Upgrade-Insecure-Requests': '1',
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      'User-Agent':'Dummy Company anna.sassin@dummy.com',
+      'Host':'www.sec.gov'
     }
 
     response = requests.get(url, headers=headers)
