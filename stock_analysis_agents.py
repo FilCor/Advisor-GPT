@@ -48,7 +48,7 @@ class StockAnalysisAgents():
         CalculatorTools.calculate,
         SECTools.search_10q,
         SECTools.search_10k,
-        YahooFinanceNewsTool
+        YahooFinanceNewsTool()
       ]
     )
 
@@ -69,7 +69,7 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        YahooFinanceNewsTool,
+        YahooFinanceNewsTool(),
         SECTools.search_10q,
         SECTools.search_10k
       ]
