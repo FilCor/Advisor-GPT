@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from langchain.tools import BaseTool
 from langchain.callbacks.manager import CallbackManagerForToolRun  # Importazione aggiunta
 from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+import wolframalpha
 import os
 from aws_utilis import get_aws_parameter
 
