@@ -23,6 +23,8 @@ from langchain_community.utilities.google_finance import GoogleFinanceAPIWrapper
 
 from aws_utilis import get_aws_parameter
 
+app_id = get_aws_parameter("WOLFRAM_ALPHA_APPID", decrypt=True)
+
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
@@ -47,7 +49,7 @@ class StockAnalysisAgents():
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
-        WolframAlphaTool(),
+        WolframAlphaTool(app_id=app_id),
         StockPriceTool(),
         SECTools.search_10q,
         SECTools.search_10k
@@ -94,6 +96,6 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        WolframAlphaTool()
+        WolframAlphaTool(app_id=app_id)
       ]
     )
