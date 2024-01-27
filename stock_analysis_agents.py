@@ -49,7 +49,7 @@ class StockAnalysisAgents():
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
-        WolframAlphaTool(app_id=app_id),
+        WolframAlphaTool(),
         StockPriceTool(),
         SECTools.search_10q,
         SECTools.search_10k
@@ -96,6 +96,6 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        WolframAlphaTool(app_id=app_id)
+        WolframAlphaTool()
       ]
     )
