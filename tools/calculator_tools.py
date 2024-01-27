@@ -14,24 +14,15 @@ app_id = get_aws_parameter("WOLFRAM_ALPHA_APPID", decrypt=True)
 class WolframAlphaInput(BaseModel):
     query: str = Field(description="Query to be asked to Wolfram Alpha")
 
-# Classe wrapper per Wolfram Alpha
-class WolframAlphaAPIWrapper:
-    def __init__(self, app_id: str):
-        self.wolfram_client = wolframalpha.Client(app_id)
-
-    def run(self, query: str) -> str:
-        res = self.wolfram_client.query(query)
-        return next(res.results).text if res.results else "No results found."
-
 # Implementazione dello strumento personalizzato
 class WolframAlphaTool(BaseTool):
     name = "Wolfram Alpha"
-    description = "Executes queries using Wolfram Alpha API"
+    description = "Useful when you have to do math calculations"
     args_schema: Type[BaseModel] = WolframAlphaInput
 
     def __init__(self, app_id: str):
-        super().__init__()  # Assicurati di chiamare il costruttore della superclasse
-        self.wolfram = WolframAlphaAPIWrapper(app_id)  # Inizializzazione corretta
+        super().__init__()  # Chiamata al costruttore della superclasse
+        self.app_id = app_id  # Memorizza l'APP ID
 
     def _run(
         self, 
@@ -39,7 +30,9 @@ class WolframAlphaTool(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        return self.wolfram.run(query)
+        wolfram_client = wolframalpha.Client(self.app_id)  # Crea il client qui
+        res = wolfram_client.query(query)
+        return next(res.results).text if res.results else "No results found."
 
     async def _arun(
         self, 
