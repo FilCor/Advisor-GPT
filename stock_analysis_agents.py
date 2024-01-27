@@ -2,9 +2,11 @@ from crewai import Agent
 import os
 
 from tools.browser_tools import BrowserTools
-from tools.calculator_tools import CalculatorTools
+from tools.calculator_tools import WolframAlphaTool
 from tools.search_tools import SearchTools
 from tools.sec_tools import SECTools
+from tools.stock_ts import StockPriceTool
+
 
 from langchain.tools.yahoo_finance_news import YahooFinanceNewsTool
 from langchain.llms import Ollama
@@ -45,9 +47,11 @@ class StockAnalysisAgents():
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
-        CalculatorTools.calculate,
+        WolframAlphaTool(),
+        StockPriceTool(),
         SECTools.search_10q,
         SECTools.search_10k
+
       ]
     )
 
@@ -90,6 +94,6 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        CalculatorTools.calculate,
+        WolframAlphaTool()
       ]
     )
