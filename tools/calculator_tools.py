@@ -15,7 +15,7 @@ class WolframAlphaInput(BaseModel):
 
 # Modifica della classe WolframAlphaAPIWrapper per accettare l'APP ID nel costruttore
 class WolframAlphaAPIWrapper:
-    def __init__(self, app_id: str):
+    def __init__(self, app_id: app_id):
         self.wolfram_client = wolframalpha.Client(app_id)
 
     def run(self, query: str) -> str:
