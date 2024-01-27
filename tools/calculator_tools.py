@@ -7,14 +7,14 @@ import wolframalpha
 import os
 from aws_utilis import get_aws_parameter
 
+# Recupero dell'APP ID da AWS
 app_id = get_aws_parameter("WOLFRAM_ALPHA_APPID", decrypt=True)
-openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 # Definizione dell'input per lo strumento
 class WolframAlphaInput(BaseModel):
     query: str = Field(description="Query to be asked to Wolfram Alpha")
 
-# Modifica della classe WolframAlphaAPIWrapper per accettare l'APP ID nel costruttore
+# Classe wrapper per Wolfram Alpha
 class WolframAlphaAPIWrapper:
     def __init__(self, app_id: str):
         self.wolfram_client = wolframalpha.Client(app_id)
@@ -30,7 +30,8 @@ class WolframAlphaTool(BaseTool):
     args_schema: Type[BaseModel] = WolframAlphaInput
 
     def __init__(self, app_id: str):
-        self.wolfram = WolframAlphaAPIWrapper(app_id)
+        super().__init__()  # Assicurati di chiamare il costruttore della superclasse
+        self.wolfram = WolframAlphaAPIWrapper(app_id)  # Inizializzazione corretta
 
     def _run(
         self, 
