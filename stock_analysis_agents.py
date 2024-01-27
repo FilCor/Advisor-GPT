@@ -33,11 +33,11 @@ class StockAnalysisAgents():
   def financial_analyst(self):
     return Agent(
       role='Il miglior Financial Analyst di sempre',
-      goal="""Impress all customers with your financial data 
+      goal="""Impress all coworkers with your financial data 
       and market trends analysis""",
       backstory="""The most seasoned financial analyst with 
       lots of expertise in stock market analysis and investment
-      strategies that is working for a super important customer.""",
+      strategies that is working for a super mega important asset manager.""",
       verbose=True,
       llm = llm,
       allow_delegation = True,
@@ -55,11 +55,11 @@ class StockAnalysisAgents():
     return Agent(
       role='Staff Research Analyst',
       goal="""Being the best at gather, interpret data and amaze
-      your customer with it""",
+      your coworker with it""",
       backstory="""Known as the BEST research analyst, you're
       skilled in sifting through news, company announcements, 
       and market sentiments. Now you're working on a super 
-      important customer""",
+      important analysis""",
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
@@ -76,12 +76,12 @@ class StockAnalysisAgents():
   def investment_advisor(self):
     return Agent(
       role='Private Investment Advisor',
-      goal="""Impress your customers with full analyses over stocks
+      goal="""Impress your coworker with full analyses over stocks
       and completer investment recommendations""",
       backstory="""You're the most experienced investment advisor
       and you combine various analytical insights to formulate
-      strategic investment advice. You are now working for
-      a super important customer you need to impress.""",
+      strategic report. You are now working for
+      a super important manging director you need to impress.""",
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
