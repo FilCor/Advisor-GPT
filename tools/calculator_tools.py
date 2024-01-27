@@ -10,7 +10,7 @@ from aws_utilis import get_aws_parameter
 # Recupero dell'APP ID da AWS
 app_id = get_aws_parameter("WOLFRAM_ALPHA_APPID", decrypt=True)
 
-c# Definizione dell'input per lo strumento
+# Definizione dell'input per lo strumento
 class WolframAlphaInput(BaseModel):
     query: str = Field(description="Query to be asked to Wolfram Alpha")
 
