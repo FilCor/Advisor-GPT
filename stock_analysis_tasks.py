@@ -79,7 +79,6 @@ class StockAnalysisTasks():
         Combine these insights to form a comprehensive report for a equity analyst.
         I want a long and detailed report.
          
-        
         You MUST Consider all aspects, including financial
         health, market sentiment, qualitative data from
         EDGAR filings and stock performances. If you have report them!
@@ -88,7 +87,11 @@ class StockAnalysisTasks():
         trading activity, and upcoming events like earnings.
 
         Make it pretty and well formatted for your analyst. Be verbose, don't be afraid to
-        vrite a long report, just be clear.                          
+        vrite a long report, just be clear. 
+        
+        Start with an executive summary with the key points and then write the full report.
+
+        Do not include any parts of the prompt in the final report.                                                
         {self.__tip_section()}
       """),
       agent=agent
