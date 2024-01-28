@@ -2,6 +2,7 @@ from typing import Any, Dict, Optional, Type
 from pydantic import BaseModel, Field
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+from langchain.tools import BaseTool
 from aws_utilis import get_aws_parameter
 from langchain_core.pydantic_v1 import BaseModel, Extra, root_validator
 from langchain_core.utils import get_from_dict_or_env
