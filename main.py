@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 from textwrap import dedent
 from dotenv import load_dotenv
-from pydantic import BaseModel, cons
+from pydantic import BaseModel, constr
 load_dotenv()
 from crew.crew import FinancialCrew
 import uuid
