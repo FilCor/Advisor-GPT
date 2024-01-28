@@ -41,21 +41,6 @@ class CompanyData(BaseModel):
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/status/{company}")
-async def get_status(company: str):
-    status = analysis_status.get(company, "Not Started")
-    return {"status": status}
-
-@app.get("/result/{company}")
-async def get_result(company: str):
-    safe_company_name = "".join(x for x in company if x.isalnum())
-    filename = f"{safe_company_name}_latest.txt"  # Assuming you save it with this pattern
-    if os.path.exists(filename):
-        with open(filename, "r") as file:
-            content = file.read()
-        return {"result": content}
-    return {"result": "Analysis not complete or file not found"}
-
 @app.post("/analyze/")
 async def analyze_company(company_data: CompanyData, background_tasks: BackgroundTasks):
     company = company_data.company

@@ -46,6 +46,7 @@ function showResult(taskId) {
     fetch(`http://13.50.159.97:8000/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
+        console.log('Received result data:', data);  // Aggiungi questo per il debug
         if (data.result) {
             document.getElementById('result').innerText = data.result;
             document.getElementById('result').style.display = 'block';
@@ -54,7 +55,8 @@ function showResult(taskId) {
         }
     })
     .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error fetching the results:', error);
+        alert('Error fetching the results');
     });
 }
 
