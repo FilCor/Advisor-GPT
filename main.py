@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, constr
 load_dotenv()
 from crew.crew import FinancialCrew
+import uuid
 
 
 from stock_analysis_agents import StockAnalysisAgents
@@ -41,46 +42,43 @@ async def read_root(request: Request):
 
 @app.get("/status/{company}")
 async def get_status(company: str):
-    status = analysis_status.get(company, "Not Started")
+    safe_company_name = "".join(x for x in company if x.isalnum())
+    status_key = f"{safe_company_name}_status"
+    status = analysis_status.get(status_key, "Not Started")
     return {"status": status}
 
 @app.get("/result/{company}")
 async def get_result(company: str):
     safe_company_name = "".join(x for x in company if x.isalnum())
-    filename = f"{safe_company_name}_latest.txt"  # Assuming you save it with this pattern
-    if os.path.exists(filename):
-        with open(filename, "r") as file:
-            content = file.read()
-        return {"result": content}
-    return {"result": "Analysis not complete or file not found"}
+    result_key = f"{safe_company_name}_result"
+    result = analysis_status.get(result_key, "Analysis not complete or result not found")
+    return {"result": result}
 
 @app.post("/analyze/")
 async def analyze_company(company_data: CompanyData, background_tasks: BackgroundTasks):
-    # Immediate response to user
     company = company_data.company
-    message = f"I've started the agent to work on {company}"
+    unique_id = str(uuid.uuid4())  # Genera un identificatore unico
+    message = f"I've started the agent to work on {company}. Task ID: {unique_id}"
 
-    # Add the actual work to background tasks
-    background_tasks.add_task(run_analysis, company)
+    background_tasks.add_task(run_analysis, company, unique_id)
 
-    return {"message": message}
+    return {"message": message, "task_id": unique_id}
 
-async def run_analysis(company):
-    analysis_status[company] = "In Progress"
+async def run_analysis(company, task_id):
     try:
         financial_crew = FinancialCrew(company)
         result = financial_crew.run()
 
-        # Ensure valid filename and handle file writing appropriately
+        # Usa task_id per creare un nome file unico
         safe_company_name = "".join(x for x in company if x.isalnum())
-        filename = f"{safe_company_name}_latest.txt"
+        filename = f"{safe_company_name}_{task_id}_latest.txt"
 
-        # Consider using an async file writer if you're handling large files or a high load
         with open(filename, "w") as file:
             file.write(result)
+
         analysis_status[company] = "Complete"
 
     except Exception as e:
-        # Add logging or more sophisticated error handling here
+        analysis_status[company] = f"Failed: {e}"
         print(f"An error occurred: {e}")
 
