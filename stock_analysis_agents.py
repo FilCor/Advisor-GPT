@@ -37,7 +37,7 @@ class StockAnalysisAgents():
   def financial_analyst(self):
 
     wolfram_alpha_tool = WolframAlphaTool()
-    stock_price_tool = StockPriceTool(api_key=polygon_api_key)
+    stock_price_tool = StockPriceTool()
 
     return Agent(
       role='the best Financial Analyst ever',
