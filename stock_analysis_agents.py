@@ -31,7 +31,7 @@ serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
 llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key, max_tokens=8000, temperature=0.3)
 Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(serp_api_key=serpapi_api_key))
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
-
+wolfram_alpha_tool = WolframAlphaTool(app_id)
 
 class StockAnalysisAgents():
   def financial_analyst(self):
@@ -49,7 +49,7 @@ class StockAnalysisAgents():
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
-        WolframAlphaTool(),
+        wolfram_alpha_tool,
         StockPriceTool(),
         SECTools.search_10q,
         SECTools.search_10k
@@ -96,6 +96,6 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        WolframAlphaTool()
+        wolfram_alpha_tool
       ]
     )
