@@ -47,10 +47,15 @@ class WolframAlphaTool(BaseTool):
     description = "Useful when you need to do math calculations!"
     args_schema: Type[BaseModel] = WolframAlphaInput
 
-    def __init__(self, app_id: str = app_id):
+    def __init__(self):
         super().__init__()
-        self.wolfram = WolframAlphaAPIWrapper(wolfram_alpha_appid=app_id)
+        # Non creare qui l'istanza di WolframAlphaAPIWrapper
+
+    def get_wolfram_client(self):
+        """Crea e restituisce un'istanza di WolframAlphaAPIWrapper."""
+        return WolframAlphaAPIWrapper(wolfram_alpha_appid=app_id)
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """Run the given query using the Wolfram Alpha API."""
-        return self.wolfram.run(query)
+        wolfram_client = self.get_wolfram_client()
+        return wolfram_client.run(query)

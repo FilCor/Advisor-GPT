@@ -31,10 +31,10 @@ serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
 llm = ChatOpenAI(model="gpt-3.5-turbo-16k", openai_api_key=openai_api_key, max_tokens=8000, temperature=0.3)
 Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(serp_api_key=serpapi_api_key))
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
-wolfram_alpha_tool = WolframAlphaTool(app_id)
 
 class StockAnalysisAgents():
   def financial_analyst(self):
+    wolfram_alpha_tool = WolframAlphaTool()
     return Agent(
       role='Il miglior Financial Analyst di sempre',
       goal="""Impress all coworkers with your financial data 
@@ -80,6 +80,7 @@ class StockAnalysisAgents():
   )
 
   def investment_advisor(self):
+    wolfram_alpha_tool = WolframAlphaTool()
     return Agent(
       role='Private Investment Advisor',
       goal="""Impress your coworker with full analyses over stocks
