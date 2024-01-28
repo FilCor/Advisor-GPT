@@ -33,12 +33,12 @@ class StockPriceTool(BaseTool):
 
     def _run(
         self, 
-        input_data: StockPriceInput,  # Modifica per utilizzare la nuova classe di input
+        input_string: str,  # Modifica per accettare una stringa
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        # Estrai i componenti dall'input
-        parts = input_data.input_string.split('|')
+        # Convalida e parsing dell'input_string
+        parts = input_string.split('|')
         if len(parts) != 3:
             return "Invalid input format. Please provide input as 'TickerSymbol|StartDate|EndDate'."
 
