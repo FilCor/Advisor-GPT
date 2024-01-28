@@ -84,6 +84,7 @@ async def get_status(task_id: str):
 
 @app.get("/result/{task_id}")
 async def get_result(task_id: str):
+    # Cerca il file con il task_id specifico
     for filename in os.listdir('.'):
         if filename.endswith(f"{task_id}_latest.txt"):
             with open(filename, "r") as file:
