@@ -17,23 +17,23 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         console.log('Analysis Started:', data);
-        checkAnalysisStatus(companyName, data.task_id); // Passa il task_id a checkAnalysisStatus
+        checkAnalysisStatus(data.task_id);  // Usa il task_id ricevuto
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 });
 
-function checkAnalysisStatus(companyName, taskId) {
-    fetch(`http://13.50.159.97:8000/status/${companyName}/${taskId}`) // Usa taskId nell'URL
+function checkAnalysisStatus(taskId) {
+    fetch(`http://13.50.159.97:8000/status/${taskId}`)  // Usa il task_id nell'URL
     .then(response => response.json())
     .then(data => {
         if (data.status === "Complete") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
-            showResult(companyName, taskId); // Passa il task_id a showResult
+            showResult(taskId);  // Passa il task_id a showResult
         } else {
-            setTimeout(() => checkAnalysisStatus(companyName, taskId), 5000); // Passa il task_id a checkAnalysisStatus
+            setTimeout(() => checkAnalysisStatus(taskId), 5000);  // Richiama con il task_id
         }
     })
     .catch((error) => {
@@ -41,8 +41,8 @@ function checkAnalysisStatus(companyName, taskId) {
     });
 }
 
-function showResult(companyName, taskId) {
-    fetch(`http://13.50.159.97:8000/result/${companyName}/${taskId}`) // Usa taskId nell'URL
+function showResult(taskId) {
+    fetch(`http://13.50.159.97:8000/result/${taskId}`)  // Usa il task_id nell'URL
     .then(response => response.json())
     .then(data => {
         if (data.result) {
