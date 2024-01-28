@@ -17,7 +17,8 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         console.log('Analysis Started:', data);
-        checkAnalysisStatus(data.task_id);  // Usa il task_id ricevuto
+        var taskId = data.task_id; // Salva il task_id ricevuto
+        checkAnalysisStatus(taskId); // Passa il task_id a checkAnalysisStatus
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -25,15 +26,15 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
 });
 
 function checkAnalysisStatus(taskId) {
-    fetch(`http://13.50.159.97:8000/status/${taskId}`)  // Usa il task_id nell'URL
+    fetch(`http://13.50.159.97:8000/status/${taskId}`)
     .then(response => response.json())
     .then(data => {
         if (data.status === "Complete") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
-            showResult(taskId);  // Passa il task_id a showResult
+            showResult(taskId); // Usa il task_id per richiedere i risultati
         } else {
-            setTimeout(() => checkAnalysisStatus(taskId), 5000);  // Richiama con il task_id
+            setTimeout(() => checkAnalysisStatus(taskId), 5000); // Continua a controllare lo stato
         }
     })
     .catch((error) => {
@@ -42,7 +43,7 @@ function checkAnalysisStatus(taskId) {
 }
 
 function showResult(taskId) {
-    fetch(`http://13.50.159.97:8000/result/${taskId}`)  // Usa il task_id nell'URL
+    fetch(`http://13.50.159.97:8000/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
