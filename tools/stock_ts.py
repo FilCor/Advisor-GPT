@@ -3,26 +3,19 @@ from pydantic import BaseModel, Field
 from langchain.tools import BaseTool
 from langchain.callbacks.manager import CallbackManagerForToolRun
 import requests
-
 from aws_utilis import get_aws_parameter
 
-app_id = get_aws_parameter("POLIGON_API_KEY", decrypt=True)
-
+# Classe modificata per accettare una singola stringa di input
 class StockPriceInput(BaseModel):
-    ticker_symbol: str = Field(description="Symbol of the stock")
-    start_date: str = Field(description="Start date for the price data")
-    end_date: str = Field(description="End date for the price data")
+    input_string: str = Field(description="Input in the format 'TickerSymbol|StartDate|EndDate'")
 
-# Definizione dell'input
+# Modifiche alla classe StockPriceTool
 class StockPriceTool(BaseTool):
     name = "Stock Price"
     description = """Retrieves first and last closing stock prices for a given date range
-    
     The Stock Price tool is designed to fetch the first and last closing stock prices for a specific stock within a given date range. 
     This tool expects the input in a specific format: a single string where the stock ticker symbol and the date range (start and end dates) are separated by pipes (|).
-
     For example, the correct input format would be 'TickerSymbol|StartDate|EndDate'. An example of a valid input for this tool is 'AAPL|2023-01-01|2023-12-31'. In this example, 'AAPL' represents the ticker symbol for Apple Inc., and '2023-01-01' to '2023-12-31' represents the date range from January 1, 2023, to December 31, 2023.
-
     It's important that inputs are formatted in this way to ensure accurate parsing and data retrieval. 
     The tool will extract the ticker symbol, 'AAPL', and then use the provided start and end dates to query the stock prices for Apple Inc. 
     within the specified date range.
@@ -40,12 +33,18 @@ class StockPriceTool(BaseTool):
 
     def _run(
         self, 
-        ticker_symbol: str, 
-        start_date: str, 
-        end_date: str, 
+        input_data: StockPriceInput,  # Modifica per utilizzare la nuova classe di input
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
+        # Estrai i componenti dall'input
+        parts = input_data.input_string.split('|')
+        if len(parts) != 3:
+            return "Invalid input format. Please provide input as 'TickerSymbol|StartDate|EndDate'."
+
+        ticker_symbol, start_date, end_date = parts
+
+        # Utilizza il client configurato
         client = self.get_api_client()
         url = f"{client['base_url']}{ticker_symbol}/range/1/day/{start_date}/{end_date}?adjusted=true&sort=asc&limit=120&apiKey={client['api_key']}"
         response = requests.get(url)
@@ -61,9 +60,7 @@ class StockPriceTool(BaseTool):
 
     async def _arun(
         self, 
-        ticker_symbol: str, 
-        start_date: str, 
-        end_date: str, 
+        input_data: StockPriceInput,
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool asynchronously."""
