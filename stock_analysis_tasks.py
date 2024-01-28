@@ -52,6 +52,27 @@ class StockAnalysisTasks():
       """),
       agent=agent
     )
+  
+  def timeseries_analysis(self, agent): 
+    return Task(description=dedent(f"""
+        Conduct a thorough analysis of the stock's price performances.
+        ALWAYS analyze the stock's price and return performance also in comparison 
+        to its industry peers and overall market trends.
+                                   
+        You HAVE to look at least at year to date, 1 year, 3 years and 5 years performances!
+
+        Your final report MUST expand on the report provided
+        but now including a clear assessment of the stock's
+        past performances expecially YTD, 1 year, 3 and 5 years
+        Be verbose!
+        
+        {self.__tip_section()}
+
+        Make sure to use the most recent data possible.
+        you MUST NOT cancel any previous information in the report, just add your informations
+      """),
+      agent=agent
+    )
 
   def filings_analysis(self, agent):
     return Task(description=dedent(f"""

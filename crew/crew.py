@@ -25,6 +25,7 @@ class FinancialCrew:
 
     research_task = tasks.research(research_analyst_agent, self.company)
     financial_task = tasks.financial_analysis(financial_analyst_agent)
+    timeseries_task = task.timeseries_analysis(financial_analyst_agent)
     filings_task = tasks.filings_analysis(financial_analyst_agent)
     recommend_task = tasks.recommend(investment_advisor_agent)
 
@@ -33,11 +34,13 @@ class FinancialCrew:
         research_analyst_agent,
         financial_analyst_agent,
         financial_analyst_agent,
+        financial_analyst_agent,
         investment_advisor_agent
       ],
       tasks=[
         research_task,
         financial_task,
+        timeseries_task,
         filings_task,
         recommend_task
       ],
