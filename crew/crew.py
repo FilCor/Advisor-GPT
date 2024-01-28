@@ -25,7 +25,7 @@ class FinancialCrew:
 
     research_task = tasks.research(research_analyst_agent, self.company)
     financial_task = tasks.financial_analysis(financial_analyst_agent)
-    timeseries_task = task.timeseries_analysis(financial_analyst_agent)
+    timeseries_task = tasks.timeseries_analysis(financial_analyst_agent)
     filings_task = tasks.filings_analysis(financial_analyst_agent)
     recommend_task = tasks.recommend(investment_advisor_agent)
 
