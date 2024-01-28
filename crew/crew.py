@@ -39,8 +39,8 @@ class FinancialCrew:
       ],
       tasks=[
         research_task,
-        financial_task,
         timeseries_task,
+        financial_task,
         filings_task,
         recommend_task
       ],
