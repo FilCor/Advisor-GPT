@@ -24,6 +24,7 @@ from langchain_community.utilities.google_finance import GoogleFinanceAPIWrapper
 from aws_utilis import get_aws_parameter
 
 app_id = get_aws_parameter("WOLFRAM_ALPHA_APPID", decrypt=True)
+polygon_api_key = get_aws_parameter("POLIGON_API_KEY", decrypt=True)
 
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
@@ -34,9 +35,12 @@ Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(s
 
 class StockAnalysisAgents():
   def financial_analyst(self):
+
     wolfram_alpha_tool = WolframAlphaTool()
+    stock_price_tool = StockPriceTool(api_key=polygon_api_key)
+
     return Agent(
-      role='Il miglior Financial Analyst di sempre',
+      role='the best Financial Analyst ever',
       goal="""Impress all coworkers with your financial data 
       and market trends analysis""",
       backstory="""The most seasoned financial analyst with 
@@ -50,7 +54,7 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         wolfram_alpha_tool,
-        StockPriceTool(),
+        stock_price_tool,
         SECTools.search_10q,
         SECTools.search_10k
 
