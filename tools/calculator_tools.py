@@ -14,13 +14,9 @@ class WolframAlphaAPIWrapper(BaseModel):
     wolfram_client: Any
     wolfram_alpha_appid: Optional[str] = None
 
-    class Config:
-        """Configuration for this pydantic object."""
-        extra = Extra.forbid
-
     def __init__(self, wolfram_alpha_appid: Optional[str] = None, **data):
         super().__init__(**data)
-        app_id = wolfram_alpha_appid or get_from_dict_or_env(data, "wolfram_alpha_appid", "WOLFRAM_ALPHA_APPID")
+        app_id = wolfram_alpha_appid or data.get("wolfram_alpha_appid")
         self.wolfram_client = wolframalpha.Client(app_id)
 
     def run(self, query: str) -> str:
