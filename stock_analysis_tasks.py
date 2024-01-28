@@ -32,17 +32,13 @@ class StockAnalysisTasks():
         health and market performance. 
         This includes examining key financial metrics such as
         P/E ratio, EPS growth, revenue trends, and 
-        debt-to-equity ratio. 
-        Also, ALWAYS analyze the stock's price and return performance also in comparison 
-        to its industry peers and overall market trends.
-                                   
-        You HAVE to look at least at year to date, 1 year, 3 years and 5 years performances!
+        debt-to-equity ratio.
 
         Your final report MUST expand on the report provided
         but now including a clear assessment of the stock's
         financial standing, its strengths and weaknesses, 
         and how it fares against its competitors in the current
-        market scenario.Always include past performances expecially YTD, 1 year, 3 and 5 years
+        market scenario.
         Be verbose!
         
         {self.__tip_section()}
@@ -87,7 +83,7 @@ class StockAnalysisTasks():
         Your final answer MUST be an expanded report that now
         also highlights significant findings from these filings,
         including any red flags or positive indicators for
-        your customer.you MUST NOT cance any previous information in the report, just add your informations
+        your customer.you MUST NOT delete any previous information in the report, just add your informations
         {self.__tip_section()}        
       """),
       agent=agent
@@ -112,7 +108,7 @@ class StockAnalysisTasks():
         
         Start with an executive summary with the key points and then write the full report.
 
-        Do not include any parts of the prompt in the final report.                                                
+        you MUST NOT include any parts of the prompt in the final report.                                                
         {self.__tip_section()}
       """),
       agent=agent

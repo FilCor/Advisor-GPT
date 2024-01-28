@@ -12,7 +12,7 @@ class StockPriceInput(BaseModel):
 # Modifiche alla classe StockPriceTool
 class StockPriceTool(BaseTool):
     name = "Stock Price"
-    description = """Retrieves first and last closing stock prices for a given date range
+    description = """Useful when you have to retrieve first and last closing stock prices for a given date range
     The Stock Price tool is designed to fetch the first and last closing stock prices for a specific stock within a given date range. 
     This tool expects the input in a specific format: a single string where the stock ticker symbol and the date range (start and end dates) are separated by pipes (|).
     For example, the correct input format would be 'TickerSymbol|StartDate|EndDate'. An example of a valid input for this tool is 'AAPL|2023-01-01|2023-12-31'. In this example, 'AAPL' represents the ticker symbol for Apple Inc., and '2023-01-01' to '2023-12-31' represents the date range from January 1, 2023, to December 31, 2023.
