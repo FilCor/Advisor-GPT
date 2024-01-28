@@ -16,7 +16,12 @@ class StockPriceInput(BaseModel):
 # Definizione dell'input
 class StockPriceTool(BaseTool):
     name = "Stock Price"
-    description = "Retrieves first and last closing stock prices for a given date range"
+    description = """Retrieves first and last closing stock prices for a given date range
+    
+    The input to this tool should be a pipe (|) separated text containing
+    the stock ticker and the date range for which the stock prices are needed.
+    For example, `AAPL|2022-01-01|2022-12-31` represents the stock symbol 'AAPL'
+    and the date range from January 1, 2022, to December 31, 2022."""
     args_schema: Type[BaseModel] = StockPriceInput
 
     def __init__(self):
