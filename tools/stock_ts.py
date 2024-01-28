@@ -8,21 +8,25 @@ from aws_utilis import get_aws_parameter
 
 app_id = get_aws_parameter("POLIGON_API_KEY", decrypt=True)
 
-# Definizione dell'input
 class StockPriceInput(BaseModel):
     ticker_symbol: str = Field(description="Symbol of the stock")
     start_date: str = Field(description="Start date for the price data")
     end_date: str = Field(description="End date for the price data")
 
-# Implementazione dello strumento personalizzato
+# Definizione dell'input
 class StockPriceTool(BaseTool):
     name = "Stock Price"
     description = "Retrieves first and last closing stock prices for a given date range"
     args_schema: Type[BaseModel] = StockPriceInput
 
-    def __init__(self, api_key):
-        self.api_key = api_key
-        self.base_url = "https://api.polygon.io/v2/aggs/ticker/"
+    def __init__(self):
+        super().__init__()
+        # Non assegnare qui l'api_key
+
+    def get_api_client(self):
+        """Crea e restituisce un client configurato per l'API di Polygon."""
+        api_key = get_aws_parameter("POLIGON_API_KEY", decrypt=True)
+        return {"base_url": "https://api.polygon.io/v2/aggs/ticker/", "api_key": api_key}
 
     def _run(
         self, 
@@ -32,7 +36,8 @@ class StockPriceTool(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        url = f"{self.base_url}{ticker_symbol}/range/1/day/{start_date}/{end_date}?adjusted=true&sort=asc&limit=120&apiKey={self.api_key}"
+        client = self.get_api_client()
+        url = f"{client['base_url']}{ticker_symbol}/range/1/day/{start_date}/{end_date}?adjusted=true&sort=asc&limit=120&apiKey={client['api_key']}"
         response = requests.get(url)
         results = response.json().get('results', [])
 
