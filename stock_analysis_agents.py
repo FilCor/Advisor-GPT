@@ -48,7 +48,7 @@ class StockAnalysisAgents():
       strategies that is working for a super mega important asset manager.""",
       verbose=True,
       llm = llm,
-      allow_delegation = False,
+      allow_delegation = True,
       #llm=ollama_openchat,
       tools=[
         BrowserTools.scrape_and_summarize_website,
@@ -73,7 +73,7 @@ class StockAnalysisAgents():
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
-      allow_delegation = False,
+      allow_delegation = True,
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
