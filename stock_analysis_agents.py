@@ -29,7 +29,7 @@ polygon_api_key = get_aws_parameter("POLIGON_API_KEY", decrypt=True)
 # Recupera le chiavi API da AWS Systems Manager Parameter Store
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 serpapi_api_key = get_aws_parameter("SERPAPI_API_KEY", decrypt=True)
-llm = ChatOpenAI(model="gpt-4-0125-preview", openai_api_key=openai_api_key, max_tokens=30000, temperature=0.3)
+llm = ChatOpenAI(model="gpt-4-0125-preview", openai_api_key=openai_api_key, temperature=0.3)
 Googlefinance_tool = GoogleFinanceQueryRun(api_wrapper=GoogleFinanceAPIWrapper(serp_api_key=serpapi_api_key))
 # Ora puoi utilizzare queste variabili dove necessario nel tuo codice
 
