@@ -44,7 +44,6 @@ class StockAnalysisTasks():
         {self.__tip_section()}
 
         Make sure to use the most recent data possible.
-        you MUST NOT cance any previous information in the report, just add your informations and report the full analysys that your colleague gave you
       """),
       agent=agent
     )
@@ -65,7 +64,6 @@ class StockAnalysisTasks():
         {self.__tip_section()}
 
         Make sure to use the most recent data possible.
-        you MUST NOT cancel any previous information in the report, just add your informations, just add your informations and report the full analysys that your colleague gave you
       """),
       agent=agent
     )
@@ -105,10 +103,9 @@ class StockAnalysisTasks():
         Make sure to include a section that shows insider 
         trading activity, and upcoming events like earnings.
 
-        Make it pretty and well formatted for your analyst. Be verbose, don't be afraid to
-        vrite a long report, just be clear. 
+        Make it pretty and well formatted for your analyst.
         
-        Start with an executive summary with the key points and then write the full report.
+        Start with an executive summary with the key points and then summarize the iformation provided.
 
         you MUST NOT include any parts of the prompt in the final report.                                                
         {self.__tip_section()}
