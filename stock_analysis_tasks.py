@@ -94,7 +94,7 @@ class StockAnalysisTasks():
   def recommend(self, agent):
     return Task(description=dedent(f"""
         Review an organize the report provided by the
-        Financial Analyst, the Research Analyst and the filings analyst.
+        Financial Analyst, the Timeseries Analyst, the Research Analyst and the filings analyst.
         Combine these insights to form a comprehensive report for a equity analyst.
         I want a long and detailed report.
          
