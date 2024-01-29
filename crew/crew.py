@@ -35,14 +35,14 @@ class FinancialCrew:
         research_analyst_agent,
         equity_analyst_agent,
         financial_analyst_agent,
-        #financial_analyst_agent,
+        financial_analyst_agent,
         investment_advisor_agent
       ],
       tasks=[
         research_task,
         timeseries_task,
         financial_task,
-        #filings_task,
+        filings_task,
         recommend_task
       ],
       verbose=2,
