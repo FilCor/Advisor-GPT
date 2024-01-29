@@ -80,8 +80,7 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         wolfram_alpha_tool,
-        stock_price_tool,
-
+        stock_price_tool
       ]
     )
 
