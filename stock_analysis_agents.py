@@ -101,8 +101,8 @@ class StockAnalysisAgents():
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
-        SECTools.search_10q,
-        SECTools.search_10k
+        #SECTools.search_10q,
+        #SECTools.search_10k
       ]
   )
 

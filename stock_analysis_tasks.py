@@ -44,7 +44,7 @@ class StockAnalysisTasks():
         {self.__tip_section()}
 
         Make sure to use the most recent data possible.
-        you MUST NOT cance any previous information in the report, just add your informations
+        you MUST NOT cance any previous information in the report, just add your informations and report the full analysys that your colleague gave you
       """),
       agent=agent
     )
@@ -65,7 +65,7 @@ class StockAnalysisTasks():
         {self.__tip_section()}
 
         Make sure to use the most recent data possible.
-        you MUST NOT cancel any previous information in the report, just add your informations
+        you MUST NOT cancel any previous information in the report, just add your informations, just add your informations and report the full analysys that your colleague gave you
       """),
       agent=agent
     )
@@ -83,7 +83,9 @@ class StockAnalysisTasks():
         Your final answer MUST be an expanded report that now
         also highlights significant findings from these filings,
         including any red flags or positive indicators for
-        your customer.you MUST NOT delete any previous information in the report, just add your informations
+        your customer.
+                                   
+        you MUST NOT delete any previous information in the report, just add your informations, just add your informations and report the full analysys that your colleague gave you
         {self.__tip_section()}        
       """),
       agent=agent
