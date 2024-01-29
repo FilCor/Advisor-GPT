@@ -22,6 +22,7 @@ class FinancialCrew:
     research_analyst_agent = agents.research_analyst()
     financial_analyst_agent = agents.financial_analyst()
     investment_advisor_agent = agents.investment_advisor()
+    equity_analyst_agent = agents.equity_analyst
 
     research_task = tasks.research(research_analyst_agent, self.company)
     financial_task = tasks.financial_analysis(financial_analyst_agent)
@@ -32,7 +33,7 @@ class FinancialCrew:
     crew = Crew(
       agents=[
         research_analyst_agent,
-        financial_analyst_agent,
+        equity_analyst_agent,
         financial_analyst_agent,
         financial_analyst_agent,
         investment_advisor_agent

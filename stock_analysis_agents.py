@@ -48,7 +48,7 @@ class StockAnalysisAgents():
       strategies that is working for a super mega important asset manager.""",
       verbose=True,
       llm = llm,
-      allow_delegation = True,
+      allow_delegation = False,
       #llm=ollama_openchat,
       tools=[
         BrowserTools.scrape_and_summarize_website,
@@ -57,6 +57,30 @@ class StockAnalysisAgents():
         stock_price_tool,
         SECTools.search_10q,
         SECTools.search_10k
+
+      ]
+    )
+  
+  def equity_analyst(self):
+
+    wolfram_alpha_tool = WolframAlphaTool()
+    stock_price_tool = StockPriceTool()
+
+    return Agent(
+      role='the best equity Analyst ever',
+      goal="""Impress all coworkers with your equity analysis""",
+      backstory="""The most seasoned equity analyst with 
+      lots of expertise in stock market analysis and investment
+      strategies that is working for a super mega important asset manager.""",
+      verbose=True,
+      llm = llm,
+      allow_delegation = False,
+      #llm=ollama_openchat,
+      tools=[
+        BrowserTools.scrape_and_summarize_website,
+        SearchTools.search_internet,
+        wolfram_alpha_tool,
+        stock_price_tool,
 
       ]
     )
@@ -73,7 +97,7 @@ class StockAnalysisAgents():
       verbose=True,
       #llm=ollama_openchat,
       llm = llm,
-      allow_delegation = True,
+      allow_delegation = False,
       tools=[
         BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
