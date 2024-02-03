@@ -7,5 +7,3 @@ celery_app = Celery(
     backend="redis://localhost:6379/0"
 )
 
-# Importa le task in modo che Celery sappia dove trovarle
-celery_app.autodiscover_tasks(['CREWAI.tasks'], force=True)
