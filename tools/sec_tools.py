@@ -6,10 +6,15 @@ from langchain.tools import tool
 from langchain.text_splitter import CharacterTextSplitter
 #from langchain.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
+from langchain.embeddings.openai import OpenAIEmbeddings
 
 from sec_api import QueryApi
 from unstructured.partition.html import partition_html
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 
 from aws_utilis import get_aws_parameter
 
@@ -96,10 +101,12 @@ class SECTools():
         is_separator_regex = False,
     )
     docs = text_splitter.create_documents([content])
+    logger.info(f"Starting embedding search for {ask}")
     retriever = FAISS.from_documents(
       docs, OpenAIEmbeddings(openai_api_key=openai_api_key)
     ).as_retriever()
     answers = retriever.get_relevant_documents(ask, top_k=4)
+    logger.info(f"Completed embedding search for {ask}")
     answers = "\n\n".join([a.page_content for a in answers])
     return answers
 
