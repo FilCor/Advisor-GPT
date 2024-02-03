@@ -7,3 +7,4 @@ celery_app = Celery(
     backend="redis://localhost:6379/0"
 )
 
+celery_app.autodiscover_tasks(['tasks'], force=True)
