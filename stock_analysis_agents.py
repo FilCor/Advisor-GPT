@@ -51,7 +51,7 @@ class StockAnalysisAgents():
       allow_delegation = False,
       #llm=ollama_openchat,
       tools=[
-        BrowserTools.scrape_and_summarize_website,
+        #BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         wolfram_alpha_tool,
         stock_price_tool,
@@ -77,7 +77,7 @@ class StockAnalysisAgents():
       allow_delegation = False,
       #llm=ollama_openchat,
       tools=[
-        BrowserTools.scrape_and_summarize_website,
+        #BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         wolfram_alpha_tool,
         stock_price_tool
@@ -98,7 +98,7 @@ class StockAnalysisAgents():
       llm = llm,
       allow_delegation = False,
       tools=[
-        BrowserTools.scrape_and_summarize_website,
+        #BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
         #SECTools.search_10q,
@@ -121,7 +121,7 @@ class StockAnalysisAgents():
       llm = llm,
       allow_delegation = False,
       tools=[
-        BrowserTools.scrape_and_summarize_website,
+        #BrowserTools.scrape_and_summarize_website,
         SearchTools.search_internet,
         SearchTools.search_news,
         wolfram_alpha_tool
