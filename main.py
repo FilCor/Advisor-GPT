@@ -11,6 +11,8 @@ from pydantic import BaseModel, constr
 load_dotenv()
 from crew.crew import FinancialCrew
 import uuid
+from tasks import run_analysis
+
 
 
 
@@ -42,25 +44,9 @@ async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/analyze/")
-async def analyze_company(company_data: CompanyData, background_tasks: BackgroundTasks):
-    company = company_data.company
-    task_id = str(uuid.uuid4())
-    analysis_status[task_id] = "In Progress"
-    background_tasks.add_task(run_analysis, company, task_id)
-    return {"message": f"Analysis started for {company}", "task_id": task_id}
-
-async def run_analysis(company, task_id):
-    try:
-        financial_crew = FinancialCrew(company)
-        result = financial_crew.run()
-        safe_company_name = "".join(x for x in company if x.isalnum())
-        filename = f"{safe_company_name}_{task_id}_latest.txt"
-        with open(filename, "w") as file:
-            file.write(result)
-        analysis_status[task_id] = "Complete"
-    except Exception as e:
-        analysis_status[task_id] = "Failed"
-        print(f"An error occurred: {e}")
+async def analyze_company(company_data: CompanyData):
+    task = run_analysis.delay(company_data.company)
+    return {"message": "Analysis started", "task_id": task.id}
 
 @app.get("/status/{task_id}")
 async def get_status(task_id: str):

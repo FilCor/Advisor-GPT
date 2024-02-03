@@ -60,6 +60,8 @@ class StockAnalysisTasks():
         but now including a clear assessment of the stock's
         past performances expecially YTD, 1 year, 3 and 5 years
         Be verbose!
+                                   
+        Today it is February the 3th
         
         {self.__tip_section()}
 
