@@ -11,7 +11,7 @@ from pydantic import BaseModel, constr
 load_dotenv()
 from crew.crew import FinancialCrew
 import uuid
-from ..tasks.tasks import run_analysis
+from tasks import run_analysis
 
 
 
