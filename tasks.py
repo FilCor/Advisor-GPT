@@ -12,10 +12,11 @@ def run_analysis(self, company):
     try:
         financial_crew = FinancialCrew(company)
         result = financial_crew.run()
-        safe_company_name = "".join(x for x in company if x.isalnum())
-        filename = f"{safe_company_name}_{task_id}_latest.txt"
-        with open(filename, "w") as file:
-            file.write(result)
-        return {"task_id": task_id, "status": "Complete"}
+        return result  # Il risultato dell'analisi
+    #     safe_company_name = "".join(x for x in company if x.isalnum())
+    #     filename = f"{safe_company_name}_{task_id}_latest.txt"
+    #     with open(filename, "w") as file:
+    #         file.write(result)
+    #     return {"task_id": task_id, "status": "Complete"}
     except Exception as e:
         return {"task_id": task_id, "status": "Failed", "error": str(e)}

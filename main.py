@@ -12,6 +12,8 @@ load_dotenv()
 from crew.crew import FinancialCrew
 import uuid
 from tasks import run_analysis
+from celery.result import AsyncResult
+from celery_app import celery_app
 
 
 
@@ -50,16 +52,13 @@ async def analyze_company(company_data: CompanyData):
 
 @app.get("/status/{task_id}")
 async def get_status(task_id: str):
-    status = analysis_status.get(task_id, "Not Started")
-    return {"status": status}
+    task_result = AsyncResult(task_id, app=celery_app)
+    return {"status": task_result.status}
 
 @app.get("/result/{task_id}")
 async def get_result(task_id: str):
-    # Cerca il file con il task_id specifico
-    for filename in os.listdir('.'):
-        if filename.endswith(f"{task_id}_latest.txt"):
-            with open(filename, "r") as file:
-                content = file.read()
-            return {"result": content}
-    return {"result": "Analysis not complete or file not found"}
+    task_result = AsyncResult(task_id, app=celery_app)
+    if task_result.ready():
+        return {"result": task_result.get()}
+    return {"result": "Analysis not complete or task not found"}
 
