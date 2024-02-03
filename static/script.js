@@ -5,7 +5,11 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     document.getElementById('statusText').innerText = 'Analyzing...';
     document.getElementById('statusText').style.color = 'orange';
 
+    // Mostra il modal del disclaimer
     showModal();
+
+    // Mostra la GIF e il messaggio di caricamento
+    document.getElementById('gifContainer').style.display = 'block';
 
     fetch('http://13.50.159.97:8000/analyze/', {
         method: 'POST',
@@ -32,6 +36,7 @@ function checkAnalysisStatus(taskId) {
         if (data.status === "Complete") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
+            document.getElementById('gifContainer').style.display = 'none'; // Nasconde la GIF
             showResult(taskId); // Usa il task_id per richiedere i risultati
         } else {
             setTimeout(() => checkAnalysisStatus(taskId), 5000); // Continua a controllare lo stato
@@ -46,7 +51,6 @@ function showResult(taskId) {
     fetch(`http://13.50.159.97:8000/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
-        console.log('Received result data:', data);  // Aggiungi questo per il debug
         if (data.result) {
             document.getElementById('result').innerText = data.result;
             document.getElementById('result').style.display = 'block';
@@ -56,13 +60,13 @@ function showResult(taskId) {
     })
     .catch((error) => {
         console.error('Error fetching the results:', error);
-        alert('Error fetching the results');
     });
 }
 
-// Modal functionality
+// Gestione del disclaimer modal
 var modal = document.getElementById('disclaimerModal');
 var span = document.getElementsByClassName("close")[0];
+var agreeButton = document.getElementById('agreeButton');
 
 function showModal() {
     modal.style.display = "block";
@@ -71,6 +75,10 @@ function showModal() {
 span.onclick = function() {
     modal.style.display = "none";
 }
+
+agreeButton.addEventListener('click', function() {
+    modal.style.display = "none";
+});
 
 window.onclick = function(event) {
     if (event.target == modal) {

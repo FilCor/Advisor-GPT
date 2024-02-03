@@ -99,3 +99,9 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+#gifContainer p#gifMessage {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
