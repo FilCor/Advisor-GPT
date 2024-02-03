@@ -3,7 +3,7 @@ from crew.crew import FinancialCrew
 import os
 import uuid
 # Altri import necessari per le tue task...
-from from celery_app import celery_app
+from celery_app import celery_app
 
 
 @celery_app.task(bind=True)
