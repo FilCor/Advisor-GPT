@@ -33,13 +33,13 @@ function checkAnalysisStatus(taskId) {
     fetch(`http://13.50.159.97:8000/status/${taskId}`)
     .then(response => response.json())
     .then(data => {
-        if (data.status === "Complete") {
+        if (data.status === "SUCCESS") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
             document.getElementById('gifContainer').style.display = 'none'; // Nasconde la GIF
             // Richiede il risultato non appena lo stato è "Complete"
             showResult(taskId); 
-        } else if (data.status === "Failed") {
+        } else if (data.status === "FAILURE") {
             console.error('Analysis failed');
             alert("Analysis failed or an error occurred.");
         } else {
