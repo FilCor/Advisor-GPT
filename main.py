@@ -54,13 +54,13 @@ async def get_result(task_id: str):
     task_result = AsyncResult(task_id, app=celery_app)
     if task_result.ready():
         try:
-            result = task_result.get  # Aggiunto timeout per sicurezza
+            result = task_result.get()  # Usa .get() con parentesi e specifica un timeout se necessario
             print(f"Task {task_id} completed with result: {result}")  # Log per debug
             return {"result": result}
         except Exception as e:
             print(f"Error retrieving result for task {task_id}: {e}")  # Log per debug
             return {"error": str(e)}
     else:
-        print(f"Task {task_id} is still in progress.")  # Log per debug
+        print(f"Task {task_id} is still in progress.") # Log per debug
     return {"result": "Analysis not complete or task not found"}
 
