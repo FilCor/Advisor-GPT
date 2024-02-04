@@ -60,6 +60,7 @@ button:hover {
     background-color: #f9f9f9;
     border-left: 4px solid #007bff;
     display: none; /* Nascondi fino a quando non sono presenti risultati */
+    overflow: auto;
 }
 
 /* Stile per il Modal del Disclaimer */

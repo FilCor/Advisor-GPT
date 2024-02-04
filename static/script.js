@@ -1,12 +1,16 @@
 document.getElementById('analysisForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var companyName = document.getElementById('company').value;
-    var analyzeButton = document.querySelector('button[type="submit"]');
-    var loader = document.getElementById('loader'); // Utilizza questo elemento come spinner
+    var analyzeButton = this.querySelector('button[type="submit"]');
+    var loader = document.getElementById('loader');
+    var gifContainer = document.getElementById('gifContainer');
+    var gifMessage = document.getElementById('gifMessage');
 
-    // Disabilita il bottone "Analyze" e mostra lo spinner
+    // Disabilita il bottone "Analyze" e mostra lo spinner e la GIF
     analyzeButton.disabled = true;
     loader.style.display = 'block';
+    gifContainer.style.display = 'block';
+    gifMessage.textContent = "L'analisi può richiedere alcuni minuti, nel frattempo goditi questa gif.";
 
     fetch('http://13.50.159.97:8000/analyze/', {
         method: 'POST',
@@ -22,11 +26,12 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     })
     .catch((error) => {
         console.error('Error:', error);
-        // Riabilita il bottone "Analyze" e nasconde lo spinner in caso di errore
         analyzeButton.disabled = false;
         loader.style.display = 'none';
+        gifContainer.style.display = 'none';
     });
 });
+
 
 function checkAnalysisStatus(taskId) {
     fetch(`http://13.50.159.97:8000/status/${taskId}`)
