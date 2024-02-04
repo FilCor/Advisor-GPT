@@ -85,7 +85,7 @@ class StockAnalysisTasks():
         including any red flags or positive indicators for
         your customer.
                                    
-        you MUST NOT delete any previous information in the report, just add your informations, just add your informations and report the full analysys that your colleague gave you
+        you MUST NOT delete any previous information in the report, just add your informations and report the full analysys that your colleague gave you
         {self.__tip_section()}        
       """),
       agent=agent
