@@ -36,10 +36,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Aggiungi il middleware di rate limiting all'applicazione FastAPI
-app.add_middleware(SlowAPIMiddleware)
-
-
 class CompanyData(BaseModel):
     company: str
      # Validator per sanificare l'input dell'azienda
