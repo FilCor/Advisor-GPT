@@ -45,6 +45,7 @@ function checkAnalysisStatus(taskId) {
         } else {
             // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
             setTimeout(() => checkAnalysisStatus(taskId), 5000); 
+            console.log(data.status)
         }
     })
     .catch((error) => {
