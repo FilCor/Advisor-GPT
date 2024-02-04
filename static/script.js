@@ -59,6 +59,8 @@ function showResult(taskId) {
     .then(response => response.json())
     .then(data => {
         if (data.result) {
+            console.log(data); // Mostra l'oggetto completo
+            console.log(data.result); // Mostra il contenuto della proprietà 'result'
             document.getElementById('result').innerHTML = data.result; // Assicurati che il contenuto sia sicuro se usi innerHTML
             document.getElementById('result').style.display = 'block';
         } else {
