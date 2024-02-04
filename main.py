@@ -15,6 +15,7 @@ from tasks import run_analysis
 from celery.result import AsyncResult
 from celery_app import celery_app
 from celery.utils.log import get_task_logger
+import re
 
 logger = get_task_logger(__name__)
 # Inizializza il limiter
