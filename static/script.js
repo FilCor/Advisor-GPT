@@ -37,9 +37,14 @@ function checkAnalysisStatus(taskId) {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
             document.getElementById('gifContainer').style.display = 'none'; // Nasconde la GIF
-            showResult(taskId); // Usa il task_id per richiedere i risultati
+            // Richiede il risultato non appena lo stato è "Complete"
+            showResult(taskId); 
+        } else if (data.status === "Failed") {
+            console.error('Analysis failed');
+            alert("Analysis failed or an error occurred.");
         } else {
-            setTimeout(() => checkAnalysisStatus(taskId), 5000); // Continua a controllare lo stato
+            // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
+            setTimeout(() => checkAnalysisStatus(taskId), 5000); 
         }
     })
     .catch((error) => {
@@ -47,12 +52,13 @@ function checkAnalysisStatus(taskId) {
     });
 }
 
+
 function showResult(taskId) {
     fetch(`http://13.50.159.97:8000/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
-            document.getElementById('result').innerText = data.result;
+            document.getElementById('result').innerHTML = data.result; // Assicurati che il contenuto sia sicuro se usi innerHTML
             document.getElementById('result').style.display = 'block';
         } else {
             alert("Analysis not complete or file not found.");
@@ -62,6 +68,7 @@ function showResult(taskId) {
         console.error('Error fetching the results:', error);
     });
 }
+
 
 // Gestione del disclaimer modal
 var modal = document.getElementById('disclaimerModal');
