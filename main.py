@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from textwrap import dedent
 from dotenv import load_dotenv
-from pydantic import BaseModel, constr
+from pydantic import BaseModel, constr, validator
 load_dotenv()
 from crew.crew import FinancialCrew
 from tasks import run_analysis
@@ -30,6 +30,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 class CompanyData(BaseModel):
     company: str
+     # Validator per sanificare l'input dell'azienda
+    @validator('company')
+    def sanitize_company_name(cls, value):
+        # Rimuovi script, tag HTML e contenuti potenzialmente pericolosi
+        sanitized_value = re.sub(r'<[^>]*?>', '', value)  # Rimuove i tag HTML
+        sanitized_value = re.sub(r'[^\w\s]', '', sanitized_value)  # Rimuove caratteri speciali, mantenendo solo lettere, numeri, underscore e spazi
+        # Aggiungi ulteriori regole di sanificazione se necessario
+        return sanitized_value.strip()
 
 
 @app.get("/")
