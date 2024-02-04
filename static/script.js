@@ -52,7 +52,8 @@ function checkAnalysisStatus(taskId) {
             // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
             setTimeout(() => checkAnalysisStatus(taskId), 5000);
             document.getElementById('statusText').innerText = 'Analyzing!';
-            document.getElementById('statusText').style.color = 'yellow';
+            document.getElementById('statusText').style.color = 'orange';
+            document.querySelector('button[type="submit"]').disabled = true;
         }
     })
     .catch((error) => {
