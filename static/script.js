@@ -1,15 +1,12 @@
 document.getElementById('analysisForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var companyName = document.getElementById('company').value;
-    document.getElementById('statusMessage').style.display = 'block';
-    document.getElementById('statusText').innerText = 'Analyzing...';
-    document.getElementById('statusText').style.color = 'orange';
+    var analyzeButton = document.querySelector('button[type="submit"]');
+    var loader = document.getElementById('loader'); // Utilizza questo elemento come spinner
 
-    // Mostra il modal del disclaimer
-    showModal();
-
-    // Mostra la GIF e il messaggio di caricamento
-    document.getElementById('gifContainer').style.display = 'block';
+    // Disabilita il bottone "Analyze" e mostra lo spinner
+    analyzeButton.disabled = true;
+    loader.style.display = 'block';
 
     fetch('http://13.50.159.97:8000/analyze/', {
         method: 'POST',
@@ -20,12 +17,14 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Analysis Started:', data);
-        var taskId = data.task_id; // Salva il task_id ricevuto
-        checkAnalysisStatus(taskId); // Passa il task_id a checkAnalysisStatus
+        var taskId = data.task_id;
+        checkAnalysisStatus(taskId);
     })
     .catch((error) => {
         console.error('Error:', error);
+        // Riabilita il bottone "Analyze" e nasconde lo spinner in caso di errore
+        analyzeButton.disabled = false;
+        loader.style.display = 'none';
     });
 });
 
@@ -33,36 +32,33 @@ function checkAnalysisStatus(taskId) {
     fetch(`http://13.50.159.97:8000/status/${taskId}`)
     .then(response => response.json())
     .then(data => {
-        console.log('Status data:', data); // Aggiungi questo log per debug
         if (data.status === "SUCCESS") {
-            document.getElementById('statusText').innerText = 'Analysis Complete!';
-            document.getElementById('statusText').style.color = 'green';
-            document.getElementById('gifContainer').style.display = 'none'; // Nasconde la GIF
-            // Richiede il risultato non appena lo stato è "Complete"
-            showResult(taskId); 
-        } else if (data.status === "FAILURE") {
-            console.error('Analysis failed');
-            alert("Analysis failed or an error occurred.");
-        } else {
-            // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
+            showResult(taskId);
+        } else if (data.status !== "FAILURE") {
             setTimeout(() => checkAnalysisStatus(taskId), 5000);
         }
     })
     .catch((error) => {
         console.error('Error:', error);
+    })
+    .finally(() => {
+        // Riabilita il bottone "Analyze" e nasconde lo spinner quando l'analisi è completata o fallita
+        document.querySelector('button[type="submit"]').disabled = false;
+        document.getElementById('loader').style.display = 'none';
     });
 }
-
 
 function showResult(taskId) {
     fetch(`http://13.50.159.97:8000/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
-            console.log(data); // Mostra l'oggetto completo
-            console.log(data.result); // Mostra il contenuto della proprietà 'result'
-            document.getElementById('result').innerHTML = data.result; // Assicurati che il contenuto sia sicuro se usi innerHTML
-            document.getElementById('result').style.display = 'block';
+            var preElement = document.createElement('pre');
+            preElement.textContent = data.result;
+            var resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = '';
+            resultContainer.appendChild(preElement);
+            resultContainer.style.display = 'block';
         } else {
             alert("Analysis not complete or file not found.");
         }
@@ -71,6 +67,8 @@ function showResult(taskId) {
         console.error('Error fetching the results:', error);
     });
 }
+
+
 
 
 // Gestione del disclaimer modal
