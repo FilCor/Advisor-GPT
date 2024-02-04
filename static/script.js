@@ -33,6 +33,7 @@ function checkAnalysisStatus(taskId) {
     fetch(`http://13.50.159.97:8000/status/${taskId}`)
     .then(response => response.json())
     .then(data => {
+        console.log('Status data:', data); // Aggiungi questo log per debug
         if (data.status === "SUCCESS") {
             document.getElementById('statusText').innerText = 'Analysis Complete!';
             document.getElementById('statusText').style.color = 'green';
@@ -44,8 +45,7 @@ function checkAnalysisStatus(taskId) {
             alert("Analysis failed or an error occurred.");
         } else {
             // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
-            setTimeout(() => checkAnalysisStatus(taskId), 5000); 
-            console.log(data.status)
+            setTimeout(() => checkAnalysisStatus(taskId), 5000);
         }
     })
     .catch((error) => {
