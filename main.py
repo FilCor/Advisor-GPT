@@ -2,27 +2,18 @@ from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import asyncio
 from datetime import datetime
-import os
 from textwrap import dedent
 from dotenv import load_dotenv
 from pydantic import BaseModel, constr
 load_dotenv()
 from crew.crew import FinancialCrew
-import uuid
 from tasks import run_analysis
 from celery.result import AsyncResult
 from celery_app import celery_app
+from celery.utils.log import get_task_logger
 
-
-
-
-from stock_analysis_agents import StockAnalysisAgents
-from stock_analysis_tasks import StockAnalysisTasks
-
-
-# Your existing imports and FinancialCrew class here...
+logger = get_task_logger(__name__)
 
 app = FastAPI()
 
@@ -53,7 +44,10 @@ async def analyze_company(company_data: CompanyData):
 @app.get("/status/{task_id}")
 async def get_status(task_id: str):
     task_result = AsyncResult(task_id, app=celery_app)
+    # Log dello stato per debug
+    logger.info(f"Task {task_id} stato: {task_result.status}")
     return {"status": task_result.status}
+
 
 @app.get("/result/{task_id}")
 async def get_result(task_id: str):
