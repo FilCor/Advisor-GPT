@@ -2,11 +2,13 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var companyName = document.getElementById('company').value;
     var analyzeButton = document.querySelector('button[type="submit"]');
-    var loader = document.getElementById('loader');
+    var loader = document.getElementById('loader'); // Utilizza questo elemento come spinner
+    var gifContainer = document.getElementById('gifContainer'); // Seleziona il contenitore della GIF
 
-    // Disabilita il bottone "Analyze" e mostra lo spinner
+    // Disabilita il bottone "Analyze" e mostra sia lo spinner che la GIF
     analyzeButton.disabled = true;
     loader.style.display = 'block';
+    gifContainer.style.display = 'block'; // Mostra la GIF
 
     fetch('http://13.50.159.97:8000/analyze/', {
         method: 'POST',
@@ -17,15 +19,15 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Analysis Started:', data);
-        var taskId = data.task_id; // Salva il task_id ricevuto
-        checkAnalysisStatus(taskId); // Passa il task_id a checkAnalysisStatus
+        var taskId = data.task_id;
+        checkAnalysisStatus(taskId);
     })
     .catch((error) => {
         console.error('Error:', error);
-        // Riabilita il bottone "Analyze" e nasconde lo spinner in caso di errore
+        // Riabilita il bottone "Analyze" e nasconde sia lo spinner che la GIF in caso di errore
         analyzeButton.disabled = false;
         loader.style.display = 'none';
+        gifContainer.style.display = 'none'; // Nasconde la GIF
     });
 });
 
@@ -39,11 +41,13 @@ function checkAnalysisStatus(taskId) {
             document.getElementById('statusText').style.color = 'green';
             document.getElementById('loader').style.display = 'none'; // Nasconde lo spinner
             document.getElementById('gifContainer').style.display = 'none'; // Nasconde la GIF
+            document.querySelector('button[type="submit"]').disabled = false; // Riabilita il bottone "Analyze"
             showResult(taskId); // Richiede il risultato
         } else if (data.status === "FAILURE") {
             console.error('Analysis failed');
             alert("Analysis failed or an error occurred.");
             document.getElementById('loader').style.display = 'none'; // Nasconde lo spinner
+            document.querySelector('button[type="submit"]').disabled = false; // Riabilita il bottone "Analyze"
         } else {
             // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
             setTimeout(() => checkAnalysisStatus(taskId), 5000);
@@ -51,13 +55,11 @@ function checkAnalysisStatus(taskId) {
     })
     .catch((error) => {
         console.error('Error:', error);
-    })
-    .finally(() => {
-        // Riabilita il bottone "Analyze" e nasconde lo spinner quando l'analisi è completata o fallita
-        document.querySelector('button[type="submit"]').disabled = false;
-        document.getElementById('loader').style.display = 'none';
+        document.getElementById('loader').style.display = 'none'; // Nasconde lo spinner in caso di errore
+        document.querySelector('button[type="submit"]').disabled = false; // Riabilita il bottone "Analyze" in caso di errore
     });
 }
+
 
 function showResult(taskId) {
     fetch(`http://13.50.159.97:8000/result/${taskId}`)
