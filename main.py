@@ -2,6 +2,9 @@ from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from datetime import datetime
 from textwrap import dedent
 from dotenv import load_dotenv
@@ -14,7 +17,8 @@ from celery_app import celery_app
 from celery.utils.log import get_task_logger
 
 logger = get_task_logger(__name__)
-
+# Inizializza il limiter
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
 
 app.add_middleware(
@@ -27,6 +31,14 @@ app.add_middleware(
 templates = Jinja2Templates(directory="templates")
 analysis_status = {} 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Registra il gestore degli errori per le violazioni del rate limit
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Aggiungi il middleware di rate limiting all'applicazione FastAPI
+app.add_middleware(SlowAPIMiddleware)
+
 
 class CompanyData(BaseModel):
     company: str
@@ -45,7 +57,8 @@ async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/analyze/")
-async def analyze_company(company_data: CompanyData):
+@limiter.limit("2/minute")  # Per esempio, limita a 5 richieste al minuto per IP
+async def analyze_company(request: Request, company_data: CompanyData):
     task = run_analysis.delay(company_data.company)
     return {"message": "Analysis started", "task_id": task.id}
 
