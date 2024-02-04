@@ -10,7 +10,7 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     loader.style.display = 'block';
     gifContainer.style.display = 'block'; // Mostra la GIF
 
-    fetch('http://13.50.159.97:8000/analyze/', {
+    fetch('https://www.filotech.eu/analyze/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
 });
 
 function checkAnalysisStatus(taskId) {
-    fetch(`http://13.50.159.97:8000/status/${taskId}`)
+    fetch(`https://www.filotech.eu/status/${taskId}`)
     .then(response => response.json())
     .then(data => {
         console.log('Status data:', data); // Aggiungi questo log per debug
@@ -51,6 +51,8 @@ function checkAnalysisStatus(taskId) {
         } else {
             // Se lo stato non è né "Complete" né "Failed", continua a controllare lo stato
             setTimeout(() => checkAnalysisStatus(taskId), 5000);
+            document.getElementById('statusText').innerText = 'Analyzing!';
+            document.getElementById('statusText').style.color = 'yellow';
         }
     })
     .catch((error) => {
@@ -62,7 +64,7 @@ function checkAnalysisStatus(taskId) {
 
 
 function showResult(taskId) {
-    fetch(`http://13.50.159.97:8000/result/${taskId}`)
+    fetch(`https://www.filotech.eu/result/${taskId}`)
     .then(response => response.json())
     .then(data => {
         if (data.result) {
