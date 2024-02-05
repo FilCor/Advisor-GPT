@@ -125,5 +125,19 @@ button:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .linkedin-icon {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    font-size: 30px; /* Regola la dimensione dell'icona */
+    color: #0077b5; /* Colore dell'icona LinkedIn */
+}
+
+/* Assicurati che l'icona sia cliccabile */
+.linkedin-icon:hover {
+    color: #0056b3; /* Cambia colore al passaggio del mouse */
+}
+
   
   
