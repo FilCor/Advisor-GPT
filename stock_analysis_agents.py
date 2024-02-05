@@ -49,12 +49,9 @@ class StockAnalysisAgents():
       verbose=True,
       llm = llm,
       allow_delegation = False,
+      max_iter = 1,
       #llm=ollama_openchat,
       tools=[
-        #BrowserTools.scrape_and_summarize_website,
-        SearchTools.search_internet,
-        wolfram_alpha_tool,
-        stock_price_tool,
         SECTools.search_10q,
         SECTools.search_10k
 
