@@ -53,7 +53,8 @@ class StockAnalysisAgents():
       #llm=ollama_openchat,
       tools=[
         SECTools.search_10q,
-        SECTools.search_10k
+        SECTools.search_10k,
+        stock_price_tool
 
       ]
     )
