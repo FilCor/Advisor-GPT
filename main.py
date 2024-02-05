@@ -22,7 +22,7 @@ from aws_utilis import get_aws_parameter
 logger = get_task_logger(__name__)
 # Inizializza il limiter
 limiter = Limiter(key_func=get_remote_address)
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 app.add_middleware(
