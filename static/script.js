@@ -10,6 +10,20 @@ document.getElementById('analysisForm').addEventListener('submit', function(e) {
     loader.style.display = 'block';
     gifContainer.style.display = 'block'; // Mostra la GIF
 
+    // Aggiunta della chiamata per ottenere l'uso corrente di OpenAI
+    fetch('https://www.filotech.eu/openai-usage')
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error('Failed to load OpenAI usage info:', data.error);
+        } else {
+            // Aggiornamento dei crediti OpenAI nel DOM
+            const usageInfo = `Crediti Residui: ${data.total_tokens - data.total_usage}`;
+            document.getElementById('openaiCredits').textContent = usageInfo;
+        }
+    })
+    .catch(error => console.error('Error fetching OpenAI usage info:', error));
+
     fetch('https://www.filotech.eu/analyze/', {
         method: 'POST',
         headers: {
@@ -84,6 +98,24 @@ function showResult(taskId) {
         console.error('Error fetching the results:', error);
     });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('https://www.filotech.eu/openai-usage')
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error('Failed to load OpenAI usage info:', data.error);
+        } else {
+            // Qui puoi aggiungere la logica per visualizzare i crediti rimanenti
+            console.log('OpenAI Usage:', data);
+            // Aggiornamento dei crediti OpenAI nel DOM
+            const usageInfo = `Crediti Residui: ${data.total_tokens - data.total_usage}`;
+            document.getElementById('openaiCredits').textContent = usageInfo;
+        }
+    })
+    .catch(error => console.error('Error fetching OpenAI usage info:', error));
+});
+
 
 // Gestione del disclaimer modal
 var modal = document.getElementById('disclaimerModal');

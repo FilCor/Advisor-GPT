@@ -12,13 +12,16 @@
     <div class="container">
         <h1>Stock Analyzer AI Crew</h1>
         <form id="analysisForm">
-            <label for="company">Enter Company Name:</label><br>
+            <label for="company">Enter Company Name (Just the Name):</label><br>
             <input type="text" id="company" name="company" required><br>
             <button type="submit">Analyze</button>
         </form>
         <a href="https://www.linkedin.com/in/filippocorsini/" class="linkedin-icon" target="_blank">
             <i class="fab fa-linkedin"></i>
         </a>
+        <div id="creditsContainer">
+            <p id="openaiCredits">Crediti Residui: ...</p>
+        </div>        
         <div id="statusMessage" class="status">
             <p>Status: <span id="statusText">Waiting...</span></p>
         </div>

@@ -16,11 +16,14 @@ from celery.result import AsyncResult
 from celery_app import celery_app
 from celery.utils.log import get_task_logger
 import re
+import requests
+from .aws_utilis import get_aws_parameter
 
 logger = get_task_logger(__name__)
 # Inizializza il limiter
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
+openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -81,4 +84,16 @@ async def get_result(task_id: str):
     else:
         print(f"Task {task_id} is still in progress.") # Log per debug
     return {"result": "Analysis not complete or task not found"}
+
+@app.get("/openai-usage")
+async def get_openai_usage():
+    openai_api_key = get_aws_parameter("OPENAI_API_KEY", decrypt=True)
+    response = requests.get(
+        "https://api.openai.com/v1/usage",
+        headers={"Authorization": f"Bearer {openai_api_key}"}
+    )
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": "Failed to retrieve OpenAI usage information"}
 

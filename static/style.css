@@ -130,7 +130,7 @@ button:hover {
     position: fixed;
     right: 20px;
     top: 20px;
-    font-size: 30px; /* Regola la dimensione dell'icona */
+    font-size: 50px; /* Regola la dimensione dell'icona */
     color: #0077b5; /* Colore dell'icona LinkedIn */
 }
 
@@ -138,6 +138,23 @@ button:hover {
 .linkedin-icon:hover {
     color: #0056b3; /* Cambia colore al passaggio del mouse */
 }
+
+#creditsContainer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000; /* Assicurati che sia visibile sopra altri elementi */
+}
+
+#openaiCredits {
+    font-size: 16px;
+    color: #333;
+}
+
 
   
   
